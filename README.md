@@ -2,6 +2,7 @@
 
 ##TODOS
 - [ ] \(2019.7.10 10:00 PM) Quandl Environment Setup
+- [ ] \(2019.7.17 10:00 PM) Finish building model
 
 1. Administration
     - Project Todos and Overview: https://tinyurl.com/yxswok6b
