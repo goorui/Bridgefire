@@ -1,5 +1,7 @@
 import quandl, datetime, pandas
 import numpy as np
+
+quandl.save_key('J3AKfEcoxgiV2TtMr2ue')
 quandl.read_key()
 
 # get data and convert to pandas data frame
