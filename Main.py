@@ -17,7 +17,7 @@ for i in range(2): # change to while True in working environment
 
 # we only need annual data
 df = df[df['dimension'] == 'MRY']
-print df.shape
+print(df.shape)
 
 # sort the frame according to ticker and calendar date and data cleaning
 df = df.sort_values(by=['ticker', 'calendardate'])
@@ -32,10 +32,6 @@ df['rnd'] = df['rnd'].where(df['rnd'] > 0,1) # because we want to use logarithm 
 df = df.assign(NC = df['assets'] - df['liabilities'])
 df = df.assign(LEV = df['assets'] / df['liabilities'])
 df = df.assign(log_mcap = np.log(df['marketcap']))
-df = df.assign(log_mcap = np.log(df['marketcap']))
-
-df['netinc'] = np.abs(df['netinc'])
-df['netinc'] = df['netinc'].where(df['netinc'] > 0,1)
 df = df.assign(NI_p = np.log(np.abs(df['netinc'])))
 
 df = df.assign(NI_n = df['netinc'] + 1)
@@ -54,4 +50,4 @@ for group in gb:
 
 # only keep desired columns
 df = df.drop(columns = ['dimension', 'marketcap', 'netinc', 'assets', 'liabilities', 'rnd', 'revenue'])
-print df.columns
+print(df.columns)
