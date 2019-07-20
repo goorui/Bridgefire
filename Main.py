@@ -23,7 +23,7 @@ print(df.shape)
 df = df.sort_values(by=['ticker', 'calendardate'])
 
 
-df = df.drop_duplicates(keep = 'last') # if there's duplicate statements, we only keep the latest one
+df = df.drop_duplicates(subset = 'calendardate', keep = 'last') # if there's duplicate statements, we only keep the latest one
     # after dropping duplicates, there're about 8748 rows
 
 df['rnd'] = df['rnd'].where(df['rnd'] > 0,1) # because we want to use logarithm afterwards, we replace all non-positive value with 1
@@ -35,7 +35,7 @@ df = df.assign(log_mcap = np.log(df['marketcap']))
 df = df.assign(NI_p = np.log(np.abs(df['netinc'])))
 
 df = df.assign(NI_n = df['netinc'] + 1)
-df = df.assign(NI_n = np.log(np.abs(df['NI_n'][df['NI_n']<0])))
+df['NI_n'] = np.log(np.abs(df['NI_n'][df['NI_n'] < 0]))
 df = df.assign(log_RD = np.log(df['rnd']))
 
 # calculate increase in revenue
