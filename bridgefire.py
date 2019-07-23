@@ -64,7 +64,7 @@ df['rnd'] = df['rnd'].where(df['rnd'] > 0, 0)
 
 # create new columns in the frame following the tutorial, we replace log_NC with NC
 df = df.assign(NC=np.log(df['assets'] - df['liabilities'])) #公司对数净资产
-df = df.assign(LEV=df['assets'] / df['liabilities']) # QUESTIONS1 ! 公司财务杠杆
+df = df.assign(LEV=df['assets'] / df['liabilities'])
 df = df.assign(log_mcap=np.log(df['marketcap'])) # 公司对数净市值
 
 df = df.assign(NI_p = df['netinc'].where(df['netinc'] > 0))
@@ -72,8 +72,6 @@ df = df.assign(NI_n = df['netinc'].where(df['netinc'] < 0))
 
 df = df.assign(log_RD=np.log(df['rnd']))
 
-# Question 2!
-# calculate increase in revenue
 df = df.assign(g=np.nan)
 df_group_by_ticker = df.groupby('ticker')
 # create a new data frame to accommodate the new column g
@@ -85,9 +83,8 @@ for group in df_group_by_ticker:
                                                           'revenue'] - group[1].at[group[1].index[i-1], 'revenue']
     df = df.append(group[1])
 
-# Question3 !
 # only keep desired columns
-#df = df.drop(columns = ['dimension', 'marketcap', 'netinc', 'assets', 'liabilities', 'rnd', 'revenue'])
+df = df.drop(columns = ['dimension', 'marketcap', 'netinc', 'assets', 'liabilities', 'rnd', 'revenue'])
 
 data = quandl.Datatable(
     'SHARADAR/TICKERS').data(params={'qopts': {'columns': ['ticker', 'siccode']}})
@@ -108,7 +105,7 @@ sic_dict = {-1: "Error_low",
             5200: "Retail Trade",
             6000: "Finance, Insurance and Real Estate",
             7000: "Services",
-            9100: "Publi Adminstration",
+            9100: "Public Adminstration",
             9900: "Nonclassifiable"}
 
 # creating a single column, in each row apply sic_hash to the siccode
@@ -119,7 +116,7 @@ df_tickers['industry'] = df_tickers.apply(lambda row: sic_dict[row['sic_hash']],
 unique_sic_hashes = df_tickers['sic_hash'].unique()
 
 for sh in unique_sic_hashes:
-    colname = "industry: " + sic_dict[sh]
+    colname = sic_dict[sh]
     df_tickers[colname] = df_tickers.apply(lambda row: test(row['sic_hash'], sh), axis=1)
 
 # print(df.head())
@@ -132,10 +129,12 @@ print(df.head())
 
 #model construction
 #six factors and industry sets
-X = df[['log_NC', 'LEV', 'NI_p', 'NI_n', 'g', 'log_RD', "100", "1000", "1500", "1800", "2000","4000", "5000", "5200", "6000", "7000", "9100", "9900", "10000"]]
+X = df[['NC', 'LEV', 'NI_p', 'NI_n', 'g', 'log_RD', "Agriculture, Forestry and Fishing", "Mining", "construction", "Manufacturing","Transportation, Communications, Electric, Gas and Sanitary service", "Wholesale Trade", "Retail Trade", "Finance, Insurance and Real Estate", "Services", "Nonclassifiable"]]
 Y = df[['log_mcap']]
 X = X.fillna(0)
 Y = Y.fillna(0)
+
+print('Before Models')
 
 #actual fitting
 svr = SVR(kernel='rbf', gamma=0.1)
