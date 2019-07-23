@@ -12,9 +12,9 @@
 
 2. Data Analysis
     - Data Source:
-        - Quandl  (https://www.quandl.com/)
-        - Alphavantage (https://www.alphavantage.co/)
-	    - NYSE (https://www.intercontinentalexchange.com/index)
+        - [Quandl](https://www.quandl.com/)
+        - [Alphavantage](https://www.alphavantage.co/)
+	    - [NYSE](https://www.intercontinentalexchange.com/index)
 
     - Strategy Building:
         - Fama-French Multi-factor Model
@@ -23,8 +23,13 @@
             3. https://zhuanlan.zhihu.com/p/21449852
 
     - Backtest Engine:
-        - Quantopian: https://www.quantopian.com/
-        - Zipline (https://github.com/quantopian/Zipline)
+        - [Quantopian](https://www.quantopian.com/)
+        - [Zipline](https://github.com/quantopian/Zipline)
         - API: https://www.zipline.io/beginner-tutorial
         - tutorial:https://www.youtube.com/watch?v=J4LTIixReMA
+
+3. AWS EC2
+    - Create an EC2 instance:
+    - [SSH to an EC2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
+        - [Solution](https://forums.aws.amazon.com/thread.jspa?messageID=395633) to "Warning: Unprotected Private Key File"
 
